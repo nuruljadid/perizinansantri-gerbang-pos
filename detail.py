@@ -187,13 +187,16 @@ class MiniFrame1(wx.MiniFrame):
         datas = json.loads(datas.content)
         self.txt_nama_izi.SetLabel(datas.get("pemohon_izin").get("nama_lengkap"))
         self.txt_alamat.SetLabel(datas.get("pemohon_izin").get("alamat"))
-        self.txt_domisili.SetLabel(datas.get("pemohon_izin").get("domisili_santri"))
-        self.txt_lembaga.SetLabel(datas.get("pemohon_izin").get("lembaga"))
-        self.txt_alasan.SetLabel(datas.get("alasan_izin"))
-        self.txt_bermalam.SetLabel(datas.get("bermalam"))
-        self.txt_lama_izin.SetLabel(datas.get("selama"))
+        self.txt_domisili.SetLabel(datas.get("pemohon_izin").get("domisili_santri") or "-")
+        self.txt_lembaga.SetLabel("{} - {} {}".format(
+            datas.get("pemohon_izin").get("lembaga") or "",
+            datas.get("pemohon_izin").get("kelas") or "",
+            datas.get("pemohon_izin").get("jurusan") or ""))
+        self.txt_alasan.SetLabel(datas.get("alasan_izin") or "-")
+        self.txt_bermalam.SetLabel(datas.get("bermalam") or "-")
+        self.txt_lama_izin.SetLabel(datas.get("selama") or "-")
         self.txt_keterangan.SetLabel(datas.get("keterangan") or "-")
-        self.txt_status_izin.SetLabel(datas.get("status_perizinan"))
+        self.txt_status_izin.SetLabel(datas.get("status_perizinan") or "-")
         # Pengantar
         self.txt_nama_pengantar.SetLabel(datas.get("pengantar").get("nama_lengkap") or "-")
         # Pembuat Izin
@@ -207,8 +210,8 @@ class MiniFrame1(wx.MiniFrame):
         self.txt_biktren.SetLabel(datas.get("persetujuan_biktren").get("nama_lengkap") or "-")
         # Kamtib
         self.txt_kamtib.SetLabel(datas.get("pemberitahuan_kamtib").get("nama_lengkap") or "-")
-        if "anggota_rombongan" in datas:
-            self.rombongan(datas.get("anggota_rombongan"))
+        if datas.get("rombongan") == "Y":
+            self.rombongan(datas.get("pemohon_izin").get("anggota_rombongan"))
     
     def rombongan(self, data_rombongan):
         self.lc.DeleteAllItems()
