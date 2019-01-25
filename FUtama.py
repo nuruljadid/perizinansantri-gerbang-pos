@@ -85,7 +85,6 @@ class Frame1(wx.Frame):
         self.Center() # Set Center Frame
         self.Maximize(True)
         self.Tampilkan()
-        self.TampilkanDetail("41")
             
     def Bersihkan(self):
         self.txt_Barcode.SetValue("")

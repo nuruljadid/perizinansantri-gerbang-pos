@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #Boa:Frame:Frame1
 
-import wx, FUtama, sys
+import wx, FUtama
 from app.pedatren import Pedatren
 api = Pedatren()
 

@@ -1,4 +1,4 @@
-import requests, json, base64, sys
+import requests, json, base64
 from requests.auth import HTTPBasicAuth
 from app import logger
 
@@ -77,7 +77,7 @@ class Login():
 			urlUser = "{}penjagapos/".format(self.url)
 		else:
 			self.logOut()
-			sys.exit(1)
+			# sys.exit(1)
 		return urlUser
 
 	@property
