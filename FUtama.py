@@ -24,31 +24,31 @@ class Frame1(wx.Frame):
         # generated method, don't edit
 
         parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading=u'Nama',
-              width=260)
+              width=340)
         parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT,
-              heading=u'Domisili', width=290)
+              heading=u'Domisili', width=370)
         parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT,
-              heading=u'Lembaga', width=-1)
+              heading=u'Lembaga', width=100)
         parent.InsertColumn(col=3, format=wx.LIST_FORMAT_LEFT,
-              heading=u'Status Izin', width=150)
+              heading=u'Status Izin', width=200)
         parent.InsertColumn(col=4, format=wx.LIST_FORMAT_LEFT,
-              heading=u'Petugas Kamtib', width=260)
+              heading=u'Petugas Kamtib', width=450)
 
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRAME1, name='', parent=prnt,
-              pos=wx.Point(158, 217), size=wx.Size(1131, 492),
-            #   style=wx.DEFAULT_FRAME_STYLE, title=u'Menu Utama')
-              style=wx.SYSTEM_MENU | wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX, title=u'Menu Utama')
-        self.SetClientSize(wx.Size(1115, 454))
+            #   pos=wx.Point(158, 217), size=wx.Size(1145, 528),
+              style=wx.DEFAULT_FRAME_STYLE | wx.CLOSE_BOX | wx.MAXIMIZE_BOX,
+              title=u'Menu Utama')
+        self.SetClientSize(wx.Size(1129, 490))
 
         self.panel1 = wx.Panel(id=wxID_FRAME1PANEL1, name='panel1', parent=self,
-              pos=wx.Point(0, 0), size=wx.Size(1115, 454),
+              pos=wx.Point(0, 0), size=wx.Size(1129, 490),
               style=wx.TAB_TRAVERSAL)
 
         self.txt_Barcode = wx.TextCtrl(id=wxID_FRAME1TXT_BARCODE,
               name=u'txt_Barcode', parent=self.panel1, pos=wx.Point(16, 40),
-              size=wx.Size(192, 23), style=wx.TE_PROCESS_ENTER, value=u'')
+              size=wx.Size(400, 23), style=wx.TE_PROCESS_ENTER, value=u'')
         self.txt_Barcode.SetHint(u'Silahkan Scan Barcode')
         self.txt_Barcode.SetEditable(True)
         self.txt_Barcode.Show(True)
@@ -64,25 +64,28 @@ class Frame1(wx.Frame):
               pos=wx.Point(16, 16), size=wx.Size(56, 16), style=0)
 
         self.lc = wx.ListCtrl(id=wxID_FRAME1LC, name=u'lc', parent=self.panel1,
-              pos=wx.Point(12, 76), size=wx.Size(1091, 367),
-              style=wx.LC_REPORT)
+            #   pos=wx.Point(12, 76), size=wx.Size(1091, 367),
+            #   style=wx.LC_REPORT)
+              style=wx.LC_REPORT | wx.BORDER_SUNKEN)
         self.lc.Enable(False)
         self._init_coll_lc_Columns(self.lc)
 
-        self.btn_logout = wx.Button(id=wxID_FRAME1BTN_LOGOUT, label=u'Logout',
-              name=u'btn_logout', parent=self.panel1, pos=wx.Point(1008, 16),
-              size=wx.Size(88, 26), style=0)
-        self.btn_logout.Bind(wx.EVT_BUTTON, self.OnBtn_logoutButton,
-              id=wxID_FRAME1BTN_LOGOUT)
+        h_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(h_sizer, 90, wx.EXPAND)
+        sizer.Add(self.staticText1, 0, wx.ALL, 5)
+        sizer.Add(self.txt_Barcode, 0, wx.ALL, 5)
+        sizer.Add(self.lc, 3, wx.ALL | wx.EXPAND, 5)
+        self.panel1.SetSizer(sizer)
 
     def __init__(self, parent):
         self._init_ctrls(parent)
-        self.staticText1.SetLabel("Penjaga POS : {}".format(api.level().get("nama_lengkap")))
+        self.staticText1.SetLabel('''{}'''.format(api.level().get("nama_lengkap")))
         self.txt_Barcode.SetFocus()
         self.Center() # Set Center Frame
-        # self.ShowFullScreen(True)
-        # self.Maximize(True)
+        self.Maximize(True)
         self.Tampilkan()
+        self.TampilkanDetail("41")
             
     def Bersihkan(self):
         self.txt_Barcode.SetValue("")
@@ -153,10 +156,6 @@ class Frame1(wx.Frame):
                 self.TampilkanPesan("Silahkan Gunakan Barcode Yang Valid")
                 logger.exception(e)
 
-    def OnBtn_logoutButton(self, event):
-        api.logOut
-        self.Destroy()
-    
     def TampilkanDetail(self, idPerizinan):
         detail.id_izin = idPerizinan
         self.main = detail.create(None)

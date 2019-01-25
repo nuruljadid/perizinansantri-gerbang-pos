@@ -4,6 +4,7 @@
 import wx, json
 from threading import Timer
 from app.pedatren import Pedatren
+from app import logger
 api = Pedatren()
 
 id_izin = None
@@ -40,12 +41,12 @@ class MiniFrame1(wx.MiniFrame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.MiniFrame.__init__(self, id=wxID_MINIFRAME1, name='', parent=prnt,
-              pos=wx.Point(75, 128), size=wx.Size(1259, 539),
-              style=wx.DEFAULT_FRAME_STYLE, title='MiniFrame1')
-        self.SetClientSize(wx.Size(1243, 501))
+              pos=wx.Point(391, 258), size=wx.Size(1032, 539),
+              style=wx.DEFAULT_FRAME_STYLE, title='Detail Perizinan Santri')
+        self.SetClientSize(wx.Size(1016, 501))
 
         self.panel1 = wx.Panel(id=wxID_MINIFRAME1PANEL1, name='panel1',
-              parent=self, pos=wx.Point(0, 0), size=wx.Size(1243, 501),
+              parent=self, pos=wx.Point(0, 0), size=wx.Size(1016, 501),
               style=wx.TAB_TRAVERSAL)
 
         self.staticText1 = wx.StaticText(id=wxID_MINIFRAME1STATICTEXT1,
@@ -174,7 +175,11 @@ class MiniFrame1(wx.MiniFrame):
 
     def __init__(self, parent):
         self._init_ctrls(parent)
-        self.Tampilkan()
+        try:
+            self.Tampilkan()
+        except Exception as e:
+            logger.exception(e)
+        self.Center()
 
     def Tampilkan(self):
         datas = api.DetailIzin(id_izin)
