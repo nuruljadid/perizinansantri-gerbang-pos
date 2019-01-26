@@ -37,16 +37,23 @@ class Login():
 		return "{}{}".format(self.url,"penjagapos/perizinan/santri")
 
 	def login(self, username=None, password=None):
-		data = requests.get(self.url+'auth/login', auth=(username,password), headers=self.headers)
-		if data.status_code == 200:
-			self.__token = data.headers['x-token']
-			with open('token.txt', 'w') as f:
-				f.write(self.__token)
-		return data.status_code
+		try:
+			data = requests.get(self.url+'auth/login', auth=(username,password), headers=self.headers)
+			if data.status_code == 200:
+				self.__token = data.headers['x-token']
+				with open('token.txt', 'w') as f:
+					f.write(self.__token)
+			return data.status_code
+		except requests.ConnectionError:
+			self.setNewURL()
+			logger.info("API Down, Sedang Mengalihkan Ke IP Local")
 	
 	def cekLogin(self):
-		data = requests.get(self.url+'auth/login', headers = self.headers)
-		return data.status_code
+		try:
+			data = requests.get(self.url+'auth/login', headers = self.headers)
+			return data.status_code
+		except requests.ConnectionError:
+			self.setNewURL()
 
 	@property
 	def token(self):
@@ -101,6 +108,9 @@ class Pedatren(Login):
 			izin.close()
 			print(izin.json())
 			return izin.status_code
+		except requests.ConnectionError:
+			self.setNewURL()
+			return 500
 		except Exception as e:
 			logger.exception(e)
 			return 500
@@ -116,6 +126,9 @@ class Pedatren(Login):
 			izin.close()
 			print(izin.json())
 			return izin.status_code
+		except requests.ConnectionError:
+			self.setNewURL()
+			return 500
 		except Exception as e:
 			logger.exception(e)
 			return 500
