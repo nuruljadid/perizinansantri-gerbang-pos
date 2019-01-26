@@ -45,7 +45,7 @@ cx_Freeze.setup(
     name =  "Perizinan Santri PP. Nurul Jadid", #nama aplikasi
     options = {"build_exe": 
         {
-            "packages":["wx","base64","json","requests", "logging", "yaml"],"include_files":["app/"]
+            "packages":["wx","base64","json","requests", "logging", "yaml"],"include_files":["app/"], "includes":["idna.idnadata"], "optimize":"1" # idna.idnadata error ketika di build dengan py3
         },
         "bdist_msi":bdist_msi_options
         }, #tempat menaruh lib sama file image,dll
