@@ -27,6 +27,7 @@ class Login():
 	
 	def setNewURL(self):
 		self.__url = "http://api.pedatren.nj/"
+		logger.info("API Down, Sedang Mengalihkan Ke IP Local {}".format(self.__url))
 
 	@property
 	def url(self):
@@ -46,7 +47,6 @@ class Login():
 			return data.status_code
 		except requests.ConnectionError:
 			self.setNewURL()
-			logger.info("API Down, Sedang Mengalihkan Ke IP Local")
 	
 	def cekLogin(self):
 		try:
@@ -79,7 +79,6 @@ class Login():
 	@property
 	def urlUser(self):
 		lev = self.level()["scope"][1]
-		print(lev)
 		if 'penjagapos' in lev:
 			urlUser = "{}penjagapos/".format(self.url)
 		else:
@@ -106,7 +105,6 @@ class Pedatren(Login):
 				data=json.dumps(p), headers=self.headers
 				)
 			izin.close()
-			print(izin.json())
 			return izin.status_code
 		except requests.ConnectionError:
 			self.setNewURL()
@@ -124,7 +122,6 @@ class Pedatren(Login):
 				headers=self.headers
 				)
 			izin.close()
-			print(izin.json())
 			return izin.status_code
 		except requests.ConnectionError:
 			self.setNewURL()
