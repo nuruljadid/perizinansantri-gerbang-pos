@@ -2,3 +2,7 @@
 token.txt
 *.pyc
 py/
+/.vscode
+/UNKNOWN.egg-info
+/dist
+/build
