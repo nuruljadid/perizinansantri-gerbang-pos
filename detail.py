@@ -217,6 +217,6 @@ class MiniFrame1(wx.MiniFrame):
         self.lc.DeleteAllItems()
         kolom = self.lc.GetItemCount()
         for i in data_rombongan:
-            self.lc.InsertStringItem(kolom, i.get("nis_santri"))
-            self.lc.SetStringItem(kolom, 1, i.get("nama_lengkap"))
+            self.lc.InsertItem(kolom, i.get("nis_santri"))
+            self.lc.SetItem(kolom, 1, i.get("nama_lengkap"))
             kolom += 1

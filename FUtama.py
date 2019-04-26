@@ -127,11 +127,11 @@ class Frame1(wx.Frame):
         try:
             list_perizinan = api.GetPerizinan(cari=cari)
             for izin in list_perizinan:
-                self.lc.InsertStringItem(kolom, izin.get("pemohon_izin").get("nama_lengkap"))
-                self.lc.SetStringItem(kolom, 1, izin.get("pemohon_izin").get("domisili_santri"))
-                self.lc.SetStringItem(kolom, 2, izin.get("pemohon_izin").get("lembaga") or "-")
-                self.lc.SetStringItem(kolom, 3, izin.get("status_perizinan"))
-                self.lc.SetStringItem(kolom, 4, izin.get("pemberitahuan_kamtib").get("nama_lengkap") or "-")
+                self.lc.InsertItem(kolom, izin.get("pemohon_izin").get("nama_lengkap"))
+                self.lc.SetItem(kolom, 1, izin.get("pemohon_izin").get("domisili_santri"))
+                self.lc.SetItem(kolom, 2, izin.get("pemohon_izin").get("lembaga") or "-")
+                self.lc.SetItem(kolom, 3, izin.get("status_perizinan"))
+                self.lc.SetItem(kolom, 4, izin.get("pemberitahuan_kamtib").get("nama_lengkap") or "-")
                 kolom += 1   
         except Exception as e:
             logger.exception(e)
